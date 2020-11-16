@@ -164,3 +164,10 @@ stop-elasticsearch:
 
 wait-elasticsearch:
 	$(call wait-for, localhost:9200)
+
+
+.PHONY: publish
+publish:
+	podman tag $(IMAGE_NAMESPACE)/$(IMAGE_NAME):${IMAGE_TAG} $(IMAGE_NAMESPACE)/$(IMAGE_NAME):$(shell date --rfc-3339=date --utc)
+	podman push $(IMAGE_NAMESPACE)/$(IMAGE_NAME):$(shell date --rfc-3339=date --utc) 
+	podman push $(IMAGE_NAMESPACE)/$(IMAGE_NAME):${IMAGE_TAG}
